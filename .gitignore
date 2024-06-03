@@ -3,3 +3,9 @@
 **/result/
 **/*.zip
 **/*.bvh
+**/material/
+**/motion_material
+**/*.bam
+**/*.gltf
+**/*.egg
+**/*.npy
