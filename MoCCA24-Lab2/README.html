@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x4f5c;&#x4e1a;2</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="作业2">作业2</h1>
+<p>本次作业通过进一步应用lab1的FK知识以及插值拼接算法来完成对于动画的进一步处理，拟期望实现一个可交互的多动画角色。后半部分Task2将实现一个可交互的角色控制器，以进行驱动</p>
+<hr>
+<h2 id="任务零--环境配置-不赋分">任务零  环境配置 （不赋分）</h2>
+<hr>
+<h3 id="1-安装panda3dwindowslinuxmac">1. 安装panda3d(Windows/Linux/Mac)</h3>
+<p>建议使用conda等建立新的虚拟环境</p>
+<pre><code class="language-bash">conda create -n games105 python=3.8
+conda activate games105
+conda install numpy scipy
+pip install panda3d
+</code></pre>
+<p>如果下载过慢可使用清华镜像源安装 ( <a href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/</a> )</p>
+<blockquote>
+<p>本作业只允许使用 <code>numpy</code>， <code>scipy</code>，<code>pytorch</code>(<code>tensor-flow</code>, <code>jittor</code>)以及其依赖的库。评测时也以此为准。作业文件中请不要import除此之外的库。</p>
+</blockquote>
+<p>完成后可以运行<code>task0_build_and_run.py</code>，你将会看到一个地面上的黄色圆圈。你可以通过键盘或左手柄来控制它的移动。可以通过鼠标左右中键或右手柄操作相机视角。(检测到手柄会无视键盘输入，具体情况请参考<code>task_0_build_and_run.py</code>的注释.)</p>
+<p align=center>
+<img src='images/task0_setup.gif' width='60%'> 
+</p>
+<hr>
+<h2 id="任务一-动作拼接处理-50分">任务一 动作拼接处理 （50分）</h2>
+<hr>
+<p>在之前的lab1中你完成了对BVH数据的读入和前向/逆向运动学。而在这个部分你需要对运动数据们进行进一步的处理，从而为搭建自己的交互角色动画做准备。</p>
+<p>在这里我们在文件<code>bvh_motion.py</code>里实现一个<code>BVHMotion</code>对象，它应该有读取BVH和前向运动学的功能，并且有一些简单的动作处理函数。</p>
+<p>我们统一让<code>position</code>，<code>rotation</code>为局部位置，旋转，<code>translation</code>,<code>orientation</code>为全局位置旋转。</p>
+<p>和lab1不太相同的是，我们这次记录了每个joint有多少个channel(普通joint3个， 根节点和特殊joint有6个，且前三个为position后三个为rotation)。</p>
+<p>需要注意的是，BVH中如果该关节有position channel， 则offset会被忽略， 而是把position channel的数字当作offset使用，相当于offset是时不变的position channel。 故而我们记录了<code>joint_position</code>这一(帧数x关节x3)的数组， 对3自由度关节，其始终是offset，而对有position的关节，其会填入position。</p>
+<p>故而前向运动学可以简单地写为</p>
+<pre><code class="language-python">child_translation = parent_translation + parent_orientation.apply(child_position)
+</code></pre>
+<h3 id="part0-熟悉bvhmotion-class函数5分">part0: 熟悉BVHMotion class函数（5分）</h3>
+<p>我们的<code>BVHMotion</code>class的读取BVH功能给大家空出来了一个函数，需要同学帮忙补全。请注意，如果这个类的函数并没有正确补全，后续的任务不能进行。</p>
+<p><code>load_meta_data</code>函数为了读取BVH文件的<code>joint_name</code>,<code>joint_parent</code>,<code>joint_offset</code>。因为这个函数比较重要，我们打算让同学再次确保这个函数写的正确。请于<code>answer_task0.py</code>文件内用lab1的part1_calculate_T_pose函数补全BVHMotion class 的load_meta_data功能 。</p>
+<p>假设得到两个从不同下载源得到的BVH文件，虽然BVH的标签是走路和跑步，但不一定朝着相同的方向。我们在拼接动作时，总是希望新动作第一帧和上一个动作的最后一帧根节点位置相同，朝向相同，这样才能比较平滑地将其连接起来。由于这个功能几乎是所有动画拼接的算法的基础，作为福利，我们打算给出<code>translation_and_rotation</code>函数。这个函数是给定目标Root Joint的位置，以及朝向的方向，把角色挪到该Root Joint的位置上，并且把全身的旋转调整到对应方向上。</p>
+<p>对position的水平调整比较直观，就是</p>
+<pre><code class="language-python">res = self.raw_copy() <span class="hljs-comment"># 拷贝一份，不要修改原始数据</span>
+offset = target_translation_xz - res.joint_position[frame_num, <span class="hljs-number">0</span>, [<span class="hljs-number">0</span>,<span class="hljs-number">2</span>]]
+res.joint_position[:, <span class="hljs-number">0</span>, [<span class="hljs-number">0</span>,<span class="hljs-number">2</span>]] += offset
+</code></pre>
+<p>对于rotation的调整。课上讲过旋转<code>R</code>可以被分解为一个绕y轴的旋转<code>Ry</code>和一个绕xz平面上的轴的旋转<code>Rxz</code>，并且<code>R=RyRxz</code>。调整水平转向实际上是调整<code>Ry</code>。</p>
+<p>当然，调整完rotation后，position需要进一步调整，否则会出现本来是向前走，现在是斜着走的问题。</p>
+<p>所以请仔细阅读<code>bvh_motion.py</code>中<code>BVHMotion</code>class的<code>translation_and_rotation</code>函数，以及分解得到<code>R=RyRxz</code>的辅助函数<code>decompose_rotation_with_yaxis</code>。这个函数将会伴随所有的动作处理以及后面的interactive character的实现。</p>
+<h3 id="part1-动作插值-15分">part1: 动作插值 （15分）</h3>
+<p>有时候我们录了向前走路和跑步的动作，这些动作的运动速度是固定的。而现在我们需要新的速度的向前运动，可以通过对已有的动作进行插值得到。</p>
+<p>对于两个pose，我们可以用线性插值(lerp)处理局部偏移(joint_position)，用slerp处理局部旋转，来形成一个新的pose。那么把对应的每一帧进行上述的操作，就可以形成一个新的motion序列。</p>
+<p>请在<code>answer_task1.py</code>完成<code>blend_two_motions</code>函数。具体操作和提示可以看对应函数的注释。我们给出一个使用用线性插值(lerp)处理局部偏移(joint_position)，用slerp处理局部旋转的结果，可以看到会有明显的脚滑现象，不必担心</p>
+<p align=center>
+<img src='images/task1_blend.gif' width='60%'>
+</p>
+<h3 id="part2制作循环动画15分">part2：制作循环动画（15分）</h3>
+<p>我们提供的走路/跑步动画为向前运动一段距离。那么如何获取一直向前走的动画呢？很简单，把它复制一次然后把新的动画初始位置与它原本的末尾位置对齐即可(使用part1的函数)。</p>
+<p>然而，这个动作只是从长动作截取的一段，并不是一个完美的循环动画，直接的拼接会导致内容的突变。</p>
+<p>故而如何把一个差不多循环的动作变成循环动作？一个简单而有效的想法是尽可能把原本的首尾差异抹平，并均摊到其他帧。</p>
+<p>在本任务中，你可以使用类似于part1的lerp和slerp的方法。也可以去本文档后面的补充资料中了解一下一个在loop化经常使用的，被称作&quot;inertialization&quot;(惯性化)的方法。</p>
+<p>请在<code>answer_task1.py</code>中完成<code>build_loop_motion</code>函数。完成后可以在<code>task1_motion_editing.py</code>的<code>part2_build_loop</code>是否启用<code>build_loop_motion</code>函数来观察不同。调节<code>ShowBVHUpdate</code>中的<code>speed_inv</code>可以调节播放速度。</p>
+<p>我们在这里给出一个用inertialization完成loop化效果，应该如此</p>
+<p align=center>
+<img src='images/task2_loop1.gif' width='60%'>
+</p>
+<p>区别于直接拼接有明显的突变</p>
+<p align=center>
+<img src='images/task2_loop0.gif' width='60%'>
+</p>
+<h3 id="part3-动作拼接-15分">part3: 动作拼接 （15分）</h3>
+<p>接下来一个问题是如何衔接两个动作，比如自然地从走路到跑步？</p>
+<p>由于局部旋转不同，直接的拼接必然导致肉眼可见的突变。故而需要使用blend方法从一个动作平滑地过渡到另一个动作。</p>
+<p>你需要实现<code>concatenate_two_motions</code>函数。函数输入的<code>mix_frame1</code>表示动作1的开始转移的帧数，<code>mix_time</code>表示转移用了几帧。实际上除了linear blend， 补充知识介绍的&quot;inertialization&quot;等方法也可以用于动作的拼接，并且不需要<code>mix_time</code>参数，我们不限定方法，最终会根据连接的平滑性和动作质量评分。</p>
+<p>我们的测试用例是先走再跑，我们会先使用part2的代码生成走路的loop化的动画，之后由你的算法进行拼接，输入动画的处理可以参考<code>task1_motion_editing.py</code>的<code>part3_concatenate</code>。给出一个拼接后例子，这个例子由走路部分+走路跑步混合部分+剩余跑步部分构成</p>
+<p align=center>
+<img src='images/task3_concat.gif' width='60%'>
+</p>
+<h3 id="补充知识">补充知识</h3>
+<p>下面给出一些可能用到的知识</p>
+<h4 id="1blend的一些tips">1.blend的一些tips</h4>
+<p>插值动作时，我们会面临动作长度不一的问题。因为一般走路，跑步动作都是左右脚各迈一次，速度不同必然导致动作时间不同。假设走路，跑步的速度为v1,v2，动作帧数为n1,n2(BVH内仅含一个周期的运动)。那么如果想获得速度为v3的动作，左右脚各迈一次的时间为</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>n</mi><mo>=</mo><mfrac><mrow><msub><mi>w</mi><mn>1</mn></msub><mo>∗</mo><msub><mi>v</mi><mn>1</mn></msub><mo>∗</mo><msub><mi>n</mi><mn>1</mn></msub><mo>+</mo><msub><mi>w</mi><mn>2</mn></msub><mo>∗</mo><msub><mi>v</mi><mn>2</mn></msub><mo>∗</mo><msub><mi>n</mi><mn>2</mn></msub></mrow><mi>v</mi></mfrac></mrow><annotation encoding="application/x-tex">n = \frac{w_1 * v_1 * n_1+w_2 * v_2 * n_2}{v}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.9463em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.2603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>其中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span>为混合权重</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>w</mi><mn>1</mn></msub><mo>=</mo><mfrac><mrow><msub><mi>v</mi><mn>2</mn></msub><mo>−</mo><mi>v</mi></mrow><mrow><msub><mi>v</mi><mn>2</mn></msub><mo>−</mo><msub><mi>v</mi><mn>1</mn></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">w_1 = \frac{v_2-v}{v_2-v_1}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0963em;vertical-align:-0.836em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.2603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.836em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>w</mi><mn>2</mn></msub><mo>=</mo><mn>1.0</mn><mo>−</mo><msub><mi>w</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">w_2 = 1.0 - w_1
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1.0</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></p>
+<p>如果把走路和跑步都当成做的一种单位周期的运动，应该保证两个要混合的地方的相位相同。也就是，新动作的k帧处应该用走路的i帧和跑步的j帧进行混合，他们的比例应该也是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>:</mo><mi>i</mi><mo>:</mo><mi>j</mi><mo>=</mo><mi>n</mi><mo>:</mo><msub><mi>n</mi><mn>1</mn></msub><mo>:</mo><msub><mi>n</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">k:i:j=n:n_1:n_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>。如果遇到不是整数的方式，可以进行BVH帧率的缩放(比如说lerp和slerp)，简单的操作也可以四舍五入取到整数帧(这个可能会有效果的变化)。</p>
+<h4 id="2-inertialization">2. inertialization</h4>
+<p>先稍微介绍一下临界阻尼弹簧(Critical Damping)。回想一下，一个弹簧的末端有一个小球，小球在粘弹性流体中运动，所受两个力，一个是弹簧的弹力，为线性力；一个是流体的粘滞阻力，大小和速度的大小成正比。上述微分方程可以总结为</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>m</mi><mover accent="true"><mi>x</mi><mo>¨</mo></mover><mo>+</mo><mi>β</mi><mover accent="true"><mi>x</mi><mo>˙</mo></mover><mo>+</mo><mi>k</mi><mi>x</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">m\ddot{x} + \beta \dot{x} + kx =0
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7512em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">m</span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6679em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">x</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2222em;"><span class="mord">¨</span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6679em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">x</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.1111em;"><span class="mord">˙</span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span></span></p>
+<p>当给出的参数满足<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo>=</mo><mn>2</mn><mi>m</mi><mi>ω</mi></mrow><annotation encoding="application/x-tex">\beta=2m\omega</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mord mathnormal" style="margin-right:0.03588em;">mω</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ω</mi><mo>=</mo><msqrt><mfrac><mi>k</mi><mi>m</mi></mfrac></msqrt></mrow><annotation encoding="application/x-tex">\omega=\sqrt{\frac{k}{m}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">ω</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.84em;vertical-align:-0.5874em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.2526em;"><span class="svg-align" style="top:-3.8em;"><span class="pstrut" style="height:3.8em;"></span><span class="mord" style="padding-left:1em;"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span><span style="top:-3.2126em;"><span class="pstrut" style="height:3.8em;"></span><span class="hide-tail" style="min-width:1.02em;height:1.88em;"><svg xmlns="http://www.w3.org/2000/svg" width='400em' height='1.88em' viewBox='0 0 400000 1944' preserveAspectRatio='xMinYMin slice'><path d='M983 90
+l0 -0
+c4,-6.7,10,-10,18,-10 H400000v40
+H1013.1s-83.4,268,-264.1,840c-180.7,572,-277,876.3,-289,913c-4.7,4.7,-12.7,7,-24,7
+s-12,0,-12,0c-1.3,-3.3,-3.7,-11.7,-7,-25c-35.3,-125.3,-106.7,-373.3,-214,-744
+c-10,12,-21,25,-33,39s-32,39,-32,39c-6,-5.3,-15,-14,-27,-26s25,-30,25,-30
+c26.7,-32.7,52,-63,76,-91s52,-60,52,-60s208,722,208,722
+c56,-175.3,126.3,-397.3,211,-666c84.7,-268.7,153.8,-488.2,207.5,-658.5
+c53.7,-170.3,84.5,-266.8,92.5,-289.5z
+M1001 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.5874em;"><span></span></span></span></span></span></span></span></span>（没有阻力的固有振动频率），此时不发生摆动，振幅衰减最快，被称作临界阻尼弹簧(Critical Damping)。</p>
+<p>因此如果在第一帧之初，加上一个振幅之差，我们可以调节半衰期(其可以表示衰减快慢)，我们希望经过一个周期后，将这个加上的振幅之差衰减没。于是完成平滑的Loop的效果。我们给出两个周期的动画举个例子，第一种情况是加上Positon(t0)-Position(tT)的差距，模拟的是第一个周期的效果：</p>
+<p align=center>
+<img src='images/loop_example1.png' width='50%'>
+</p>
+<p>当然也可以加上加上Positon(tT)-Position(t0)的差距，模拟的是第二个周期的效果：</p>
+<p align=center>
+<img src='images/loop_example2.png' width='50%'>
+</p>
+<p>这两种方法都可以，一般情况下，用这两种情况的一个混合效果作为Postion的变化值。当然Rotation的话，也类似，不过更新的话要用<code>offset_rot * R.from_quat(rotations[i])</code>的形式。</p>
+<p>由于比较复杂，我们为大家提前写好了一个辅助文件<code>smooth_utils.py</code>。里面含有按照临界阻尼作用Position和Rotation的函数。如果使用&quot;inertialization&quot;的方法，请利用<code>smooth_utils.py</code>来在<code>answer_task1.py</code>中的part2的<code>build_loop_motion</code>函数进一步实现loop motion的制作。</p>
+<p>对于本版块，可以进一步阅读并参考<a href="https://theorangeduck.com/page/creating-looping-animations-motion-capture">Creating Looping Animations from Motion Capture</a>的前几页，其后几页是讲更加精细的loop操作。我们这个part的图也是截取自该blog。关于里面应用到的弹簧振子半衰期等概念也可以阅读该blog的其他版块，如<a href="https://theorangeduck.com/page/spring-roll-call">The Game Developer's Spring-Roll-Call</a></p>
+<hr>
+<h2 id="任务二-可交互角色动画-50分">任务二 可交互角色动画 (50分)</h2>
+<hr>
+<p>你将在这一部分中实现一个简单的可交互角色动画：通过对动作捕捉数据的选择和拼接，使虚拟角色根据键盘/手柄的控制执行相应的动作。你需要完成的代码在<code>answer_task2.py</code>，实现后，运行<code>task2_interactive_character.py</code>查看效果。</p>
+<p>我们使用两个class去实现可交互动画。一个是 Controller，位于 <code>viewer/controller.py</code> ，它根据手柄或者键盘信号 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mrow><mi>i</mi><mi>n</mi><mi>p</mi><mi>u</mi><mi>t</mi></mrow></msub></mrow><annotation encoding="application/x-tex">a_{input}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">in</span><span class="mord mathnormal mtight">p</span><span class="mord mathnormal mtight">u</span><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span> 来计算角色的移动目标 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mrow><mi>d</mi><mi>e</mi><mi>s</mi><mi>i</mi><mi>r</mi><mi>e</mi><mi>d</mi></mrow></msub></mrow><annotation encoding="application/x-tex">d_{desired}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight">es</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">re</span><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> ；另一个是你需要在 <code>answer_task2.py</code> 编写的 CharacterController，其功能是根据输入的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mrow><mi>d</mi><mi>e</mi><mi>s</mi><mi>i</mi><mi>r</mi><mi>e</mi><mi>d</mi></mrow></msub></mrow><annotation encoding="application/x-tex">d_{desired}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight">es</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">re</span><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 选择合适的动作，并根据该动作更新角色状态 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span> 。</p>
+<p>在 <code>answer_task2.py</code> 里的 update_state 函数中，你可以获得 Controller 类计算出的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mrow><mi>d</mi><mi>e</mi><mi>s</mi><mi>i</mi><mi>r</mi><mi>e</mi><mi>d</mi></mrow></msub></mrow><annotation encoding="application/x-tex">d_{desired}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight">es</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">re</span><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，包括目标位置（desired_pos）、朝向（desired_rot）、线速度（desired_vel）、角速度（desired_avel）等信息，其中朝向为主要控制目标，位置、速度等信息在本任务中仅作参考，如不需要可以忽略。这些信息以列表的形式给出，代表未来第 (0, 20, 40, 60, 80, 100) 帧时角色的目标状态。其中 0 对应当前状态， 100 对应用户的控制输入 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mrow><mi>i</mi><mi>n</mi><mi>p</mi><mi>u</mi><mi>t</mi></mrow></msub></mrow><annotation encoding="application/x-tex">a_{input}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">in</span><span class="mord mathnormal mtight">p</span><span class="mord mathnormal mtight">u</span><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>。 而 (20, 40, 60, 80) 则对应经过惯性化平滑处理过的输入（惯性化部分请参考任务一补充资料的第二点）。</p>
+<p><code>motion_material</code> 目录下给出的几个新的用于本 task 的动作数据文件，包括有5个 bvh：</p>
+<pre><code>walk.bvh 向前快速跑
+spin_clockwise.bvh 顺时针转弯
+spin_counter_clockwise.bvh 逆时针转弯
+turn_left.bvh 向左90度转弯
+turn_right.bvh 向右90度转弯
+</code></pre>
+<p>你需要利用这5个bvh，来实现一个可以交互的角色控制器。注意walk.bvh实际上是一个跑步动作，因此你需要注意该动作与其他动作拼接时的平滑处理。</p>
+<p>我们在 <code>graph.py</code> 给出一个简单的 Motion Graph 的定义，以及一个表示本任务中动作连接关系文件 <code>nodes.npy</code>。由于所有的动画 clip 都已大致对齐，所以每一个动画都可以和其他动画发生 transition。示意图如下</p>
+<p align=center>
+<img src='images/task2_graph.png' width='50%'>
+</p>
+<p>你可以运用 task1 介绍的任何函数和方法来使得你的动画质量变得更好。</p>
+<p>Motion Graph 的 Interactive Control 可以细分为3个任务</p>
+<ol>
+<li>
+<p>我们提供了一个预先计算好的 Motion Graph，其中有向图的节点 (node) 表示某个动画，有向边 (edge) 表示前一个动画结束后可以连接（transit）到后一个动画。为了实现交互，你需要完成 update_state，使其可以根据目标状态 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mrow><mi>d</mi><mi>e</mi><mi>s</mi><mi>i</mi><mi>r</mi><mi>e</mi><mi>d</mi></mrow></msub></mrow><annotation encoding="application/x-tex">d_{desired}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight">es</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">re</span><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> ，遍历当前 node 对应的transition motion，并挑选出恰当的 transition motion。注意：你不一定需要使用 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mrow><mi>d</mi><mi>e</mi><mi>s</mi><mi>i</mi><mi>r</mi><mi>e</mi><mi>d</mi></mrow></msub></mrow><annotation encoding="application/x-tex">d_{desired}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="mord mathnormal mtight">es</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">re</span><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 的全部信息。如果需要，你可以在 <code>answer_task2.py</code> 中添加更多的函数。</p>
+</li>
+<li>
+<p>在1. 的基础上，你需要正确的更新角色的位置和朝向，以保证 transition 前后角色位置不发生跳变</p>
+</li>
+<li>
+<p>在2. 的基础上，你需要使用合适的插值/平滑方法，使角色的姿势（以及速度）在 transition 前后保持连贯</p>
+</li>
+</ol>
+<p>我们最后以实际运行效果判断，按照动作切换连续性，动作自然程度进行评分。</p>
+<ul>
+<li>通过： 能够响应输入，但是上面评分标准中有一项或以上有较大缺陷</li>
+<li>优良： 上述评分标准无较大缺陷，或缺陷不明显(如较小的脚底打滑等)</li>
+</ul>
+<p>这里给出一个只响应输入旋转，没有平滑处理的控制效果，相信你可以做的更好 :-)</p>
+<p align=center>
+<img src='images/interact.gif' width='50%'>
+</p>
+<hr>
+<h2 id="提交">提交</h2>
+<hr>
+<p>需要提交的文件是<code>answer_task0.py</code>,<code>answer_task1.py</code>和<code>answer_task2.py</code>，以及一份你实现过程和最终实现结果的报告。最终上交时打包成zip格式，注意在你上交的每一份文件上都写好你的姓名学号。</p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>
