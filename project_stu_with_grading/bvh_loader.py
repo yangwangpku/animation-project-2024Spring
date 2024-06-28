@@ -142,9 +142,9 @@ class BVHMotion():
         root_quat: (4,)的ndarray, 手动指定root joint的四元数表示的旋转
         '''
         if joint_position is None:
-            joint_position = self.joint_position
+            joint_position = self.joint_position.copy()
         if joint_rotation is None:
-            joint_rotation = self.joint_rotation
+            joint_rotation = self.joint_rotation.copy()
         
         if frame_id_list is not None:
             joint_position = joint_position[frame_id_list]

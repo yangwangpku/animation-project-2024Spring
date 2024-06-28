@@ -414,6 +414,7 @@ class SimpleViewer(ShowBase):
         pos, quat = self.joint2body(pos_, quat_)
         self.character.world.loadBodyPos(c_id, pos.flatten())
         self.character.world.loadBodyQuat(c_id, quat.flatten())
+        self.sync_physics_to_kinematics()
         pass
 
     def get_pose(self): # done
@@ -490,10 +491,10 @@ class SimpleViewer(ShowBase):
     # def set_joint_orientation_by_name(self, name, quat):
     #     self.joints[self.name2idx[name]].setQuat(self.render, pc.Quat(*quat[...,[3,0,1,2]].tolist()))
     
-    def set_joint_position_orientation(self, link_name, pos, quat): 
-        if not link_name in self.name2idx or self.name2idx[link_name] >= len(self.joints):
-            return
-        self.set_joints_with_idx(self.name2idx[link_name], pos, quat)
+    # def set_joint_position_orientation(self, link_name, pos, quat): 
+    #     if not link_name in self.name2idx or self.name2idx[link_name] >= len(self.joints):
+    #         return
+    #     self.set_joints_with_idx(self.name2idx[link_name], pos, quat)
     
     # def set_joints_with_idx(self, idx, pos, quat):
     #     self.joints[idx].setPos(self.render, *pos.tolist())

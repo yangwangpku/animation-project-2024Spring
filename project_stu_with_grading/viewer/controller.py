@@ -69,7 +69,9 @@ class KeyAndPad():
             ('s', 'arrow_down'): ['z', -1],
             ('a', 'arrow_left'): ['x', 1],
             ('d', 'arrow_right'): ['x', -1],
-            ('space', 'space'): ['gait', 1]
+            ('space', 'space'): ['gait', 1],
+            ('q','q'): ['z', 0.5],
+
         }
         for key, value in key_map.items():
             self.viewer.accept(key[0], self.key_input, [value[0], value[1]])
@@ -311,7 +313,6 @@ class Controller:
         self.position = position_trajectory[0]
         self.rotation = rotation_trajectory[0]
         
-        # print(rotation_trajectory[0])
         rotation_trajectory_render = rotation_trajectory * self._neg
         rotation_trajectory_render = rotation_trajectory_render[..., self._perm]
         
@@ -346,18 +347,19 @@ class Controller:
         self.draw_future()
         return task.cont
     
-    # def set_pos(self, pos):
-        
-    #     init_pos = self.node.get_pos()
-    #     pos = pos.copy()
-    #     pos[1] = 0.01
-    #     self.node.set_pos(*pos)
-
-    #     delta = pos - init_pos
-    #     delta = LVector3(*delta)
-    #     self.cameractrl.position = self.cameractrl.position + delta
-    #     self.cameractrl.center = self.cameractrl.center + delta
-    #     self.cameractrl.look()
+    def set_pos(self, pos):
+        pos = pos.copy()
+        pos[1] = 0.0
+        init_pos = self.position.copy()
+        delta = pos - init_pos
+        self.position = pos
+        self.ctrl_position += delta
+        self.ctrl_center += delta
+        delta = LVector3(*delta)
+        self.cameractrl.position = LVector3(-self.ctrl_position[0], -self.ctrl_position[2], self.ctrl_position[1])
+        self.cameractrl.center = LVector3(-self.ctrl_center[0], -self.ctrl_center[2], self.ctrl_center[1])
+        self.cameractrl.look()
+        pass
         
         
     # def set_rot(self, rot):

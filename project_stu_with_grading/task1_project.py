@@ -34,17 +34,18 @@ class InteractiveUpdate():
         # 逐帧更新角色状态
         character_state = self.character_controller.update_state(
                 desired_pos_list, desired_rot_list, 
-                desired_vel_list, desired_avel_list
+                desired_vel_list, desired_avel_list, current_gait
                 )
         # 同步手柄和角色的状态
         self.character_controller.sync_controller_and_character(character_state)
         
         # viewer 渲染
         # 对于kinematics-based方法直接set角色状态
-        for i in range(len(character_state[0])):
-            name, pos, rot = character_state[0][i], character_state[1][i], character_state[2][i]
-            self.viewer.set_joint_position_orientation(name, pos, rot)
-        return task.cont   
+        if not self.viewer.simu_flag:
+            name, pos, rot = character_state[0], character_state[1], character_state[2]
+            self.viewer.set_pose(name, pos, rot)
+        # 对于physics-based方法不能set角色状态，而是应该调整施加给character的力
+        # 对应init函数里面的pre_simulation_func选项
         
             
         return task.cont   
